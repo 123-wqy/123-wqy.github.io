@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>带时间显示的网页</title>
+    <style>
+        body {
+            background-image: url('26b002cf26dc53c4.jpg');
+            background-size: contain; /* 修改为 contain 以确保图片完整显示 */
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            /* 这里使用设备默认的网页字体，若没有则使用 Arial 或其他无衬线字体 */
+            font-family: Arial, sans-serif; 
+            position: relative; /* 添加相对定位 */
+        }
+
+        #top-time {
+            /* 使用 vw 单位并限制最小和最大字体大小 */
+            font-size: min(max(24px, 3vw), 45px); 
+            color: white;
+            text-align: center;
+            position: absolute; /* 绝对定位 */
+            top: 15%; /* 使用百分比来定位，可根据实际情况调整 */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #bottom-time {
+            /* 使用 vw 单位并限制最小和最大字体大小 */
+            font-size: min(max(12px, 1.5vw), 18px); 
+            color: white;
+            text-align: center;
+            position: absolute; /* 绝对定位 */
+            bottom: 20%; /* 使用百分比来定位，可根据实际情况调整 */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #left-top-time {
+            font-size: min(max(12px, 1.5vw), 18px); 
+            color: rgb(241, 240, 240);
+            text-align: left;
+            position: absolute; /* 绝对定位 */
+            top: 3%; /* 以垂直中线为基准 */
+            left: 40%; /* 以水平中线为基准 */
+            transform: translate(-100%, -50%); /* 向左上方移动自身宽度和高度的一半 */
+            font-weight: bold; /* 添加这一行让字体加粗 */
+        }
+
+        #update-time-button {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="top-time"></div>
+    <div id="bottom-time"></div>
+    <div id="left-top-time"></div>
+    <button id="update-time-button"></button>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            const shortFormattedTime = `${hours}:${minutes}`;
+
+            document.getElementById('top-time').textContent = formattedTime;
+            document.getElementById('bottom-time').textContent = formattedTime;
+            document.getElementById('left-top-time').textContent = shortFormattedTime;
+        }
+
+        // 为按钮添加点击事件监听器
+        const updateButton = document.getElementById('update-time-button');
+        if (updateButton) {
+            updateButton.addEventListener('click', updateTime);
+        }
+
+        // 在页面加载完成后调用一次 updateTime 函数
+        document.addEventListener('DOMContentLoaded', updateTime);
+    </script>
+</body>
+</html>
